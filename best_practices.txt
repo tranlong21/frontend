@@ -1,0 +1,19 @@
+
+1. CẤU HÌNH SPRING BOOT (Backend)
+   - HikariCP (Connection Pool): Trong `application-prod.yml`, set `maximum-pool-size: 10` (Neon free tier giới hạn connection).
+   - Jackson Timezone: Cấu hình `spring.jackson.time-zone: Asia/Ho_Chi_Minh` để đồng bộ thời gian sổ lưu bút.
+   - Logging: Sử dụng Logback cấu hình xuất file hoặc console theo chuẩn JSON nếu muốn tích hợp Log Management sau này.
+   - Validation: Sử dụng `@Validated` và `@Size(min=1, max=80)` trong DTO để chặn data rác ngay từ layer Controller.
+
+2. CẤU HÌNH REACT & API (Frontend)
+   - Axios Instance: Tạo một file `api/axiosClient.ts` sử dụng `import.meta.env.VITE_API_URL` làm baseURL.
+   - LocalStorage Management: Lưu trạng thái `isMuted` vào localStorage. Khi người dùng click "Mở thiệp", set `isMuted: false` và trigger `audio.play()`.
+   - Audio Context: Trình duyệt chặn autoplay. Giải pháp: Chỉ init Audio Context sau sự kiện `onClick` đầu tiên (Nút Mở thiệp).
+
+3. SECURITY & CORS
+   - CORS Config: Không dùng `@CrossOrigin("*")`. Hãy viết một `WebMvcConfigurer` bean để load `allowedOrigins` từ environment variables.
+   - Rate Limiting: (Optional cho CV cao cấp) Cài đặt `Bucket4j` ở backend để giới hạn mỗi IP chỉ được post 3 comment/phút, tránh bị spam database Neon.
+
+4. UI/UX REFINEMENT
+   - Animation: Sử dụng `framer-motion` cho hiệu ứng phong bì mở ra mượt mà.
+   - Loading State: Thêm skeleton hoặc spinner khi fetch danh sách comment từ Render (vì Render free tier có thể bị "ngủ" sau 15p không hoạt động).

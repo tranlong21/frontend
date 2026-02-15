@@ -1,0 +1,42 @@
+
+.
+├── backend/ (Java Spring Boot 3.x)
+│   ├── src/main/java/com/wedding/api/
+│   │   ├── config/              # CORS, Security, Database, Swagger configs
+│   │   ├── common/              # Constants, Exceptions, Utils, Base classes
+│   │   ├── modules/             # Business Logic divided by domain
+│   │   │   └── guestbook/       # Guestbook Module
+│   │   │       ├── controller/  # API Endpoints
+│   │   │       ├── service/     # Business logic interfaces & implementation
+│   │   │       ├── repository/  # Data access (Spring Data JPA)
+│   │   │       ├── entity/      # JPA Entities
+│   │   │       ├── dto/         # Request/Response Data Transfer Objects
+│   │   │       └── mapper/      # MapStruct or manual conversion logic
+│   │   └── WeddingApplication.java
+│   ├── src/main/resources/
+│   │   ├── application.yml      # Base config
+│   │   ├── application-dev.yml  # Development config
+│   │   └── application-prod.yml # Production config
+│   └── pom.xml                  # Maven dependencies
+├── frontend/ (React + Vite + TS)
+│   ├── src/
+│   │   ├── api/                 # Axios instances & Service layer calls
+│   │   ├── assets/              # Audio (open.mp3), Images, Fonts
+│   │   ├── components/          # Shared UI Components (Button, Input, Modal)
+│   │   ├── features/            # Feature-based components
+│   │   │   ├── invitation/      # Cover & Content logic
+│   │   │   └── guestbook/       # Comment list & Form logic
+│   │   ├── hooks/               # Custom hooks (useAudio, useLocalStorage)
+│   │   ├── layouts/             # Page layouts
+│   │   ├── types/               # TypeScript interfaces/enums
+│   │   ├── utils/               # Helpers (format date, validation)
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── public/                  # Static assets
+│   ├── .env.example
+│   └── vite.config.ts
+├── docs/                        # Project Documentation for CV
+│   ├── api-spec.md              # Markdown for API details
+│   ├── database-schema.png      # Schema diagram
+│   └── architecture.md          # Explain why this structure was chosen
+└── README.md
