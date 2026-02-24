@@ -3,6 +3,10 @@ import { AlbumImage } from "@/types";
 import Lightbox from "@/src/components/Lightbox";
 import Cover from "@/src/features/invitation/Cover";
 import Header from "@/src/features/invitation/Header";
+import Ceremony from "@/src/features/invitation/Ceremony";
+import Album from "@/src/features/invitation/Album";
+import Timeline from "@/src/features/invitation/Timeline";
+import Location from "@/src/features/invitation/Location";
 import WeddingParty from "@/src/features/invitation/WeddingParty";
 import GiftEnvelope from "@/src/features/gift/GiftEnvelope";
 import Guestbook from "@/src/features/invitation/Guestbook";
@@ -44,7 +48,7 @@ const App: React.FC = () => {
     setIsOpening(true);
 
     // Hiệu ứng âm thanh khi mở thư
-    if (openSoundRef.current) openSoundRef.current.play().catch(() => {});
+    if (openSoundRef.current) openSoundRef.current.play().catch(() => { });
 
     setTimeout(() => {
       setIsOpen(true);
@@ -64,9 +68,8 @@ const App: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen bg-[#8b2b2b] selection:bg-rose-200 ${
-        showGiftModal || galleryIndex !== null ? "overflow-hidden" : ""
-      } font-sans transition-colors duration-500`}
+      className={`min-h-screen bg-[#8b2b2b] selection:bg-rose-200 ${showGiftModal || galleryIndex !== null ? "overflow-hidden" : ""
+        } font-sans transition-colors duration-500`}
     >
       <audio
         ref={openSoundRef}
@@ -81,9 +84,8 @@ const App: React.FC = () => {
         <div className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[150]">
           <button
             onClick={() => setIsMuted(!isMuted)}
-            className={`relative w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl transition-all transform hover:scale-110 active:scale-90 overflow-hidden ${
-              isMuted ? "bg-gray-500" : "bg-[#b32d2e]"
-            }`}
+            className={`relative w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white shadow-2xl transition-all transform hover:scale-110 active:scale-90 overflow-hidden ${isMuted ? "bg-gray-500" : "bg-[#b32d2e]"
+              }`}
           >
             {!isMuted && (
               <div className="absolute inset-0 border-2 border-white/20 rounded-full animate-spin-slow pointer-events-none"></div>
@@ -102,85 +104,15 @@ const App: React.FC = () => {
           <div className="max-w-screen-md mx-auto bg-[#fdf6e3] shadow-2xl relative overflow-hidden min-h-screen">
             <Header />
 
-            <div className="bg-[#f5ead5] py-20 px-6 sm:px-12 text-center border-y border-[#d4af37]/20 relative">
-              <div className="max-w-lg mx-auto">
-                <p className="uppercase text-[11px] sm:text-xs text-[#8b2b2b] font-bold tracking-[0.3em] mb-4">
-                  Lễ Thành Hôn được cử hành tại tư gia
-                </p>
-                <p className="text-2xl sm:text-3xl font-serif font-bold text-[#8b2b2b] mb-3">
-                  Đội 4 Nam Hải, xã Nghĩa Lâm, tỉnh Ninh Bình
-                </p>
-                <p className="uppercase text-[10px] text-[#8b2b2b]/50 tracking-[0.2em] mb-8">
-                  Vào lúc
-                </p>
-                <p className="text-7xl sm:text-8xl font-serif font-bold text-[#8b2b2b] mb-10 tracking-tighter">
-                  10:00
-                </p>
-                <div className="flex items-center justify-center gap-4 sm:gap-10 text-[#8b2b2b] border-y border-[#8b2b2b]/10 py-8 mb-6">
-                  <span className="text-xs sm:text-sm uppercase tracking-widest font-bold">Thứ Bảy</span>
-                  <div className="w-[1px] h-14 bg-[#8b2b2b]/20"></div>
-                  <span className="text-6xl sm:text-7xl font-serif font-bold">28</span>
-                  <div className="w-[1px] h-14 bg-[#8b2b2b]/20"></div>
-                  <span className="text-xs sm:text-sm uppercase tracking-widest font-bold">Tháng 02</span>
-                </div>
-                <p className="text-4xl font-serif font-bold text-[#8b2b2b] mb-4 tracking-wider">2026</p>
-                <p className="text-base sm:text-lg font-serif text-[#8b2b2b]/60 italic font-medium mb-8">
-                  (Tức ngày 12/01 Bính Ngọ)
-                </p>
-              </div>
-            </div>
+            <Ceremony />
 
-            <div className="py-20 px-6 sm:px-10 bg-[#f5ead5]/30">
-              <div className="text-center mb-10">
-                <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#8b2b2b] italic">
-                  Album Ảnh Cưới
-                </h3>
-              </div>
+            <Album images={WEDDING_ALBUM} onImageClick={setGalleryIndex} />
 
-              <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-5xl mx-auto">
-                {WEDDING_ALBUM.slice(0, 4).map((img, idx) => (
-                  <div
-                    key={img.id}
-                    onClick={() => setGalleryIndex(idx)}
-                    className="relative group overflow-hidden rounded-xl shadow-lg aspect-[3/4] cursor-pointer bg-stone-200"
-                  >
-                    <img
-                      src={img.thumb}
-                      alt="Wedding Album"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
-                    />
-
-                    {idx === 3 && WEDDING_ALBUM.length > 4 && (
-                      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-xl sm:text-3xl font-bold backdrop-blur-[2px]">
-                        <span>+{WEDDING_ALBUM.length - 4}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Timeline />
 
             <WeddingParty />
 
-            <div className="bg-[#ece0cc] py-24 px-6 text-center">
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#8b2b2b] mb-8 italic">
-                Địa điểm Tiệc cưới:
-              </h3>
-              <div className="bg-white p-8 sm:p-12 rounded-[2.5rem] border border-[#d4af37]/20 shadow-2xl inline-block w-full max-w-2xl transform transition hover:-translate-y-1">
-                <p className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 leading-relaxed">TƯ GIA NHÀ TRAI</p>
-                <div className="w-16 h-[2px] bg-[#d4af37] mx-auto my-6 opacity-20"></div>
-                <p className="text-sm sm:text-lg text-gray-500 mb-10 leading-relaxed font-medium">
-                  Đội 4 Nam Hải, xã Nghĩa Lâm, tỉnh Ninh Bình
-                </p>
-                <button
-                  onClick={() => setShowMapModal(true)}
-                  className="bg-[#8b2b2b] text-white px-12 py-4 rounded-full font-bold text-sm tracking-widest hover:bg-[#6b1f1f] transition-all shadow-lg active:scale-95"
-                >
-                  CHỈ ĐƯỜNG
-                </button>
-              </div>
-            </div>
+            <Location onShowMap={() => setShowMapModal(true)} />
 
             <div className="h-16 bg-[#8b2b2b] bg-pattern-red opacity-90 shadow-inner"></div>
 
@@ -235,34 +167,43 @@ const App: React.FC = () => {
             <div className="p-8 sm:p-12">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div className="text-center">
-                  <p className="text-[#8b2b2b] font-bold mb-6 font-serif text-lg">Chú Rể - Hoàng Thịnh</p>
+                  <p className="text-[#8b2b2b] font-bold mb-6 font-serif text-lg">
+                    Chú Rể - Hoàng Thịnh
+                  </p>
+
                   <div className="w-48 h-48 mx-auto bg-white p-3 rounded-2xl mb-4 shadow-xl border border-stone-100">
                     <img
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=VietinBank-106876543440-TranVanThinh"
+                      src={`${BASE}img/qr1.webp`}
                       alt="QR Groom"
                       className="w-full h-full rounded-xl"
+                      loading="lazy"
                     />
                   </div>
+
                   <p className="text-xs text-stone-400 mb-1">VietinBank</p>
                   <p className="font-bold text-gray-800 text-sm">106876543440</p>
                   <p className="text-stone-700 text-xs font-bold mt-1">TRAN VAN THINH</p>
                 </div>
 
                 <div className="text-center">
-                  <p className="text-[#8b2b2b] font-bold mb-6 font-serif text-lg">Cô Dâu - Hồng Ngọc</p>
+                  <p className="text-[#8b2b2b] font-bold mb-6 font-serif text-lg">
+                    Cô Dâu - Hồng Ngọc
+                  </p>
+
                   <div className="w-48 h-48 mx-auto bg-white p-3 rounded-2xl mb-4 shadow-xl border border-stone-100">
                     <img
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=VCB-0961000038320-TranThiNgoc"
+                      src={`${BASE}img/qr2.webp`}
                       alt="QR Bride"
                       className="w-full h-full rounded-xl"
+                      loading="lazy"
                     />
                   </div>
+
                   <p className="text-xs text-stone-400 mb-1">Vietcombank</p>
                   <p className="font-bold text-gray-800 text-sm">0961000038320</p>
                   <p className="text-stone-700 text-xs font-bold mt-1">TRAN THI NGOC</p>
                 </div>
               </div>
-
               <p className="mt-10 text-center text-stone-500 text-sm italic">
                 Cảm ơn bạn đã đồng hành cùng chúng mình trong ngày trọng đại!
               </p>

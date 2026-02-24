@@ -1,7 +1,7 @@
 import React from "react";
 
 const Header: React.FC = () => {
-  const BASE = import.meta.env.BASE_URL; // ✅ giờ TS sẽ hết lỗi
+  const BASE = import.meta.env.BASE_URL; 
 
   return (
     <div className="relative">
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
               <p className="text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] mb-1 font-bold">
                 CHÚ RỂ
               </p>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#8b2b2b] mb-1 relative inline-block">
+              <h3 className="text-[22px] leading-tight sm:text-3xl md:text-4xl font-serif font-bold text-[#8b2b2b] mb-1 relative inline-block">
                 Trần Văn Thịnh
                 <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-[#8b2b2b]/20"></div>
               </h3>
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               <p className="text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] mb-1 font-bold">
                 CÔ DÂU
               </p>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#8b2b2b] mb-1 relative inline-block">
+              <h3 className="text-[22px] leading-tight sm:text-3xl md:text-4xl font-serif font-bold text-[#8b2b2b] mb-1 relative inline-block">
                 Trần Thị Ngọc
                 <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-[#8b2b2b]/20"></div>
               </h3>
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
               </div>
 
               <p className="text-[10px] sm:text-[11px] md:text-xs text-gray-500 max-w-[180px] mx-auto mt-4 leading-relaxed font-medium">
-                Đội 9 xã Quý Nhất, tỉnh Ninh Bình
+                Đội 9 Công Điền Chỉ Thiện, xã Quỹ Nhất, tỉnh Ninh Bình
               </p>
             </div>
           </div>

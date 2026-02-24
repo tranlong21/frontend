@@ -51,7 +51,7 @@ const WeddingParty: React.FC = () => {
 
             <div className="p-8 flex flex-col gap-4">
               <a
-                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Ti%E1%BB%87c%20C%C6%B0%E1%BB%9Bi%3A%20Ho%C3%A0ng%20Th%E1%BB%8Bnh%20%26%20H%E1%BB%93ng%20Ng%E1%BB%8Dc&dates=20260228T043000Z/20260228T070000Z&details=Tr%C3%A2n%20tr%E1%BB%8Dng%20k%C3%ADnh%20m%E1%BB%9Di%20b%E1%BA%A1n%20%C4%91%E1%BA%BFn%20chung%20vui%20c%C3%B9ng%20gia%20%C4%91%C3%ACnh%20ch%C3%BAng%20t%C3%B4i%20t%E1%BA%A1i%20bu%E1%BB%95i%20ti%E1%BB%87c%20th%C3%A2n%20m%E1%BA%ADt.&location=%C4%90%E1%BB%99i%204%20Nam%20H%E1%BA%A3i%2C%20x%C3%A3%20Ngh%C4%A9a%20L%C3%A2m%2C%20t%E1%BB%89nh%20Ninh%20B%C3%ACnh"
+                href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85%20Th%C3%A0nh%20H%C3%B4n%20%26%20Ti%E1%BB%87c%20C%C6%B0%E1%BB%9Bi%3A%20Ho%C3%A0ng%20Th%E1%BB%8Bnh%20%26%20H%E1%BB%93ng%20Ng%E1%BB%8Dc&dates=20260228T030000Z/20260228T070000Z&details=Tr%C3%A2n%20tr%E1%BB%8Dng%20k%C3%ADnh%20m%E1%BB%9Di%20b%E1%BA%A1n%20%C4%91%E1%BA%BFn%20chung%20vui%20c%C3%B9ng%20gia%20%C4%91%C3%ACnh%20ch%C3%BAng%20t%C3%B4i%20t%E1%BA%A1i%20bu%E1%BB%95i%20l%E1%BB%85%20v%C3%A0%20ti%E1%BB%87c%20c%C6%B0%E1%BB%9Bi.&location=%C4%90%E1%BB%99i%204%20Nam%20H%E1%BA%A3i%2C%20x%C3%A3%20Ngh%C4%A9a%20L%C3%A2m%2C%20t%E1%BB%89nh%20Ninh%20B%C3%ACnh"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-3 bg-white border border-gray-200 p-4 rounded-xl shadow-sm hover:shadow-md hover:border-[#8b2b2b] transition-all group cursor-pointer"
@@ -69,10 +69,10 @@ const WeddingParty: React.FC = () => {
                     "BEGIN:VEVENT",
                     "UID:" + new Date().getTime() + "-party@wedding.invitation",
                     "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
-                    "DTSTART:20260228T043000Z",
+                    "DTSTART:20260228T030000Z",
                     "DTEND:20260228T070000Z",
-                    "SUMMARY:Tiệc Cưới: Hoàng Thịnh & Hồng Ngọc",
-                    "DESCRIPTION:Trân trọng kính mời bạn đến chung vui cùng gia đình chúng tôi tại buổi tiệc thân mật.",
+                    "SUMMARY:Lễ Thành Hôn & Tiệc Cưới: Hoàng Thịnh & Hồng Ngọc",
+                    "DESCRIPTION:Trân trọng kính mời bạn đến chung vui cùng gia đình chúng tôi tại buổi lễ và tiệc cưới thân mật.",
                     "LOCATION:Đội 4 Nam Hải, xã Nghĩa Lâm, tỉnh Ninh Bình",
                     "END:VEVENT",
                     "END:VCALENDAR"

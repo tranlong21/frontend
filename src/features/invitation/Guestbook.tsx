@@ -6,43 +6,87 @@ const Guestbook: React.FC = () => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    // console.log("API_BASE:", import.meta.env.VITE_API_URL);
+    const API_URL = `${import.meta.env.VITE_API_URL}/api/v1/guestbook`;
 
-    // Load comments from local storage on mount
+
+    // Load comments from backend on mount
     useEffect(() => {
-        const savedComments = localStorage.getItem('wedding-guestbook');
-        if (savedComments) {
-            setComments(JSON.parse(savedComments));
-        } else {
-            // Initial dummy data for demonstration
-            setComments([
-                { name: 'Hoàng Anh', message: 'Chúc mừng hạnh phúc hai bạn nhé!', time: '09:00 14/02/2026' },
-                { name: 'Minh Thư', message: 'Happy Wedding! Mong hai bạn trăm năm hạnh phúc.', time: '08:45 14/02/2026' }
-            ]);
-        }
+        fetchComments();
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const fetchComments = async () => {
+        setIsLoading(true);
+        console.log('Fetching comments from:', API_URL);
+        try {
+            const response = await fetch(API_URL);
+            console.log('Fetch response status:', response.status);
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Fetched comments:', data.items.length);
+                setComments(data.items);
+            } else {
+                console.error('Fetch failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching comments detail:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !message.trim()) return;
+        const trimmedName = name.trim();
+        const trimmedMessage = message.trim();
+
+        if (!trimmedName || !trimmedMessage) return;
 
         setIsSubmitting(true);
 
-        // Simulate network delay
-        setTimeout(() => {
-            const newComment: Comment = {
-                name: name,
-                message: message,
-                time: new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'numeric', year: 'numeric' })
-            };
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: trimmedName,
+                    message: trimmedMessage
+                }),
+            });
 
-            const updatedComments = [newComment, ...comments];
-            setComments(updatedComments);
-            localStorage.setItem('wedding-guestbook', JSON.stringify(updatedComments));
-
-            setName('');
-            setMessage('');
+            if (response.ok) {
+                const newComment = await response.json();
+                setComments([newComment, ...comments]);
+                setName('');
+                setMessage('');
+            } else {
+                const errorData = await response.json();
+                alert(`Lỗi: ${errorData.message || 'Không thể gửi lời chúc'}`);
+            }
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+            alert('Có lỗi xảy ra khi kết nối tới máy chủ.');
+        } finally {
             setIsSubmitting(false);
-        }, 800);
+        }
+    };
+
+    const formatDate = (isoString: string) => {
+        try {
+            const date = new Date(isoString);
+            return date.toLocaleString('vi-VN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            });
+        } catch (e) {
+            return isoString;
+        }
     };
 
     return (
@@ -91,20 +135,29 @@ const Guestbook: React.FC = () => {
                 </div>
 
                 <div className="space-y-4 max-w-2xl mx-auto max-h-[600px] overflow-y-auto pr-2 scrollbar-thin">
-                    {comments.map((comment, index) => (
-                        <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-stone-100 hover:shadow-md transition-shadow">
-                            <div className="flex justify-between items-baseline mb-2">
-                                <h4 className="font-bold text-[#8b2b2b] text-lg font-serif">{comment.name}</h4>
-                                <span className="text-xs text-stone-400 italic">{comment.time}</span>
-                            </div>
-                            <p className="text-stone-600 leading-relaxed font-medium">{comment.message}</p>
+                    {isLoading ? (
+                        <div className="text-center py-10 text-stone-400 italic flex flex-col items-center gap-4">
+                            <div className="w-10 h-10 border-4 border-[#8b2b2b]/20 border-t-[#8b2b2b] rounded-full animate-spin"></div>
+                            <p>Đang tải lời chúc...</p>
                         </div>
-                    ))}
+                    ) : (
+                        <>
+                            {comments.map((comment, index) => (
+                                <div key={comment.id || index} className="bg-white p-6 rounded-xl shadow-sm border border-stone-100 hover:shadow-md transition-shadow">
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h4 className="font-bold text-[#8b2b2b] text-lg font-serif">{comment.name}</h4>
+                                        <span className="text-xs text-stone-400 italic">{formatDate(comment.createdAt)}</span>
+                                    </div>
+                                    <p className="text-stone-600 leading-relaxed font-medium">{comment.message}</p>
+                                </div>
+                            ))}
 
-                    {comments.length === 0 && (
-                        <div className="text-center py-10 text-stone-400 italic">
-                            Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc nhé!
-                        </div>
+                            {comments.length === 0 && (
+                                <div className="text-center py-10 text-stone-400 italic">
+                                    Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc nhé!
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>

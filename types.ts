@@ -6,7 +6,13 @@ export interface AlbumImage {
 }
 
 export interface Comment {
+  id?: string;
   name: string;
   message: string;
-  time: string;
+  createdAt: string;
+}
+
+export interface PagedResponse<T> {
+  items: T[];
+  nextCursor: string | null;
 }
